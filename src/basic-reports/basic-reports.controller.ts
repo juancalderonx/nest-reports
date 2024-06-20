@@ -16,4 +16,15 @@ export class BasicReportsController {
     PDF.pipe(res);
     PDF.end();
   }
+
+  @Get('employment-letter')
+  async employmentLetter(@Res() res: Response) {
+    const PDF = await this.basicReportsService.employmentLetterPdf();
+
+    res.setHeader('Content-Type', 'application/pdf');
+    PDF.info.Title = 'Employment Letter';
+    PDF.info.Author = 'Neron';
+    PDF.pipe(res);
+    PDF.end();
+  }
 }
