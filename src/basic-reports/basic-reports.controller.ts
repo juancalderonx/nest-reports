@@ -1,6 +1,14 @@
-import { Controller, Get, Param, ParseIntPipe, Res } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Query,
+  Res,
+} from '@nestjs/common';
 import { BasicReportsService } from './basic-reports.service';
 import { Response } from 'express';
+import { CountryQueryParams } from 'src/interfaces';
 
 @Controller('basic-reports')
 export class BasicReportsController {
@@ -26,6 +34,20 @@ export class BasicReportsController {
 
     res.setHeader('Content-Type', 'application/pdf');
     PDF.info.Title = 'Employment Letter';
+    PDF.info.Author = 'Neron';
+    PDF.pipe(res);
+    PDF.end();
+  }
+
+  @Get('countries')
+  async getCountriesReport(
+    @Query() filters: CountryQueryParams,
+    @Res() res: Response,
+  ) {
+    const PDF = await this.basicReportsService.countriesReportPdf(filters);
+
+    res.setHeader('Content-Type', 'application/pdf');
+    PDF.info.Title = 'Countries Report';
     PDF.info.Author = 'Neron';
     PDF.pipe(res);
     PDF.end();

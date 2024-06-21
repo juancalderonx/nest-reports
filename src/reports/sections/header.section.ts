@@ -22,18 +22,14 @@ interface HeaderSectionOptions {
  * @returns Content object with the header section
  */
 export const HeaderSection = (options: HeaderSectionOptions): Content => {
-  const { showLogo = true, showDate = true, title } = options;
+  const { showLogo = true, showDate = true, title, subTitle } = options;
 
   const headerLogo: Content = showLogo ? logo : null;
   const headerDate: Content = showDate ? buildDate() : null;
-  const headerTitle: Content = title ? buildTitle(title) : null;
+  const headerTitle: Content = title ? buildTitle(title, subTitle) : null;
 
   return {
-    columns: [
-      { width: 'auto', stack: [headerLogo] },
-      { width: '*', text: '' },
-      { width: 'auto', stack: [headerTitle, headerDate] },
-    ],
+    columns: [headerLogo, headerTitle, headerDate],
   };
 };
 
@@ -45,7 +41,8 @@ export const buildDate = (): Content => {
   return {
     text: DateFormatter.formatDate(new Date()),
     alignment: 'right',
-    margin: [20, 20],
+    margin: [20, 30],
+    width: 150,
   };
 };
 
@@ -54,12 +51,38 @@ export const buildDate = (): Content => {
  * @param title string with the title for the document
  * @returns Content object with the title
  */
-export const buildTitle = (title: string): Content => {
+export const buildTitle = (title: string, subTitle?: string): Content => {
+  const headerSubTitle: Content = subTitle ? buildSubTitle(subTitle) : null;
+
   return {
-    text: title,
+    stack: [
+      {
+        text: title,
+        alignment: 'center',
+        margin: [0, 15, 0, 0],
+        style: {
+          fontSize: 22,
+          bold: true,
+        },
+      },
+      headerSubTitle,
+    ],
+  };
+};
+
+/**
+ * Builds the subtitle content for the header section
+ * @param subTitle string with the subtitle for the document
+ * @returns Content object with the subtitle
+ */
+export const buildSubTitle = (subTitle: string): Content => {
+  return {
+    text: subTitle,
+    alignment: 'center',
+    margin: [0, 2, 0, 0],
     style: {
+      fontSize: 16,
       bold: true,
     },
-    margin: [0, 0, 0, 10],
   };
 };

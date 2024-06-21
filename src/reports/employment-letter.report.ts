@@ -25,6 +25,7 @@ const styles: StyleDictionary = {
     margin: [0, 0, 0, 20],
   },
 };
+
 interface ReportOptions {
   employerName: string;
   employerPosition: string;

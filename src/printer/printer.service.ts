@@ -9,7 +9,9 @@ export class PrinterService {
 
   createPdf(
     docDefinition: TDocumentDefinitions,
-    options: BufferOptions = {},
+    options: BufferOptions = {
+      tableLayouts: printerConfig.tableLayouts,
+    },
   ): PDFKit.PDFDocument {
     return this.printer.createPdfKitDocument(docDefinition, options);
   }
