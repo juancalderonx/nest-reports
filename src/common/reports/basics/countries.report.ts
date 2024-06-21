@@ -1,5 +1,5 @@
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
-import { FooterSection, HeaderSection } from './sections';
+import { FooterSection, HeaderSection } from '../sections';
 import { countries as Country } from '@prisma/client';
 
 interface ReportOptions {

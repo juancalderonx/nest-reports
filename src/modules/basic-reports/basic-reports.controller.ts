@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { BasicReportsService } from './basic-reports.service';
 import { Response } from 'express';
-import { CountryQueryParams } from 'src/interfaces';
+import { CountryQueryParams } from 'src/common/interfaces';
 
 @Controller('basic-reports')
 export class BasicReportsController {

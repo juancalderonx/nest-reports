@@ -1,5 +1,5 @@
 import { Content } from 'pdfmake/interfaces';
-import { DateFormatter } from 'src/helpers';
+import { DateFormatter } from 'src/common/helpers';
 
 const logo: Content = {
   image: 'src/assets/tucan-code-logo.png',

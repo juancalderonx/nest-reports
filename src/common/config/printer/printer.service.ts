@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import PdfPrinter from 'pdfmake';
 import type { BufferOptions, TDocumentDefinitions } from 'pdfmake/interfaces';
-import { printerConfig } from 'src/common/config/printer/printer.config';
+import { printerConfig } from './printer.config';
 
 @Injectable()
 export class PrinterService {
