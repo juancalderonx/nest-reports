@@ -19,4 +19,15 @@ export class StoreReportsController {
     PDF.pipe(res);
     PDF.end();
   }
+
+  @Get('svg-chart')
+  async getSvgChart(@Res() res: Response) {
+    const PDF = await this.storeReportsService.getSvgChart();
+
+    res.setHeader('Content-Type', 'application/pdf');
+    PDF.info.Title = 'SVG Charts Report';
+    PDF.info.Author = 'Neron';
+    PDF.pipe(res);
+    PDF.end();
+  }
 }
