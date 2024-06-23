@@ -4,6 +4,7 @@ import { TopCountry } from 'src/common/helpers/interfaces';
 import { FooterSection, HeaderSection } from '../utils/sections';
 import { LineChart } from '../utils/charts/line.chart';
 import { BarsChart } from '../utils/charts/bars.chart';
+import { PolarAreaChart } from '../utils/charts/polar-area.chart';
 
 interface ReportValues {
   title?: string;
@@ -20,21 +21,24 @@ export const getCountriesStatisticsReport = async (
     throw new Error('Top countries data is required');
   }
 
-  const [donutChart, lineChart, barsChart1, barsChart2] = await Promise.all([
-    DonutChart.generate({
-      entries: topCountries.map((country) => ({
-        label: country.country,
-        value: country.customers,
-      })),
-      position: 'left',
-    }),
+  const [donutChart, lineChart, barsChart1, barsChart2, polarAreaChart] =
+    await Promise.all([
+      DonutChart.generate({
+        entries: topCountries.map((country) => ({
+          label: country.country,
+          value: country.customers,
+        })),
+        position: 'left',
+      }),
 
-    LineChart.generate(),
+      LineChart.generate(),
 
-    BarsChart.generate(),
+      BarsChart.generate(),
 
-    BarsChart.generate(),
-  ]);
+      BarsChart.generate(),
+
+      PolarAreaChart.generate(),
+    ]);
 
   return {
     pageMargins: [40, 100, 40, 60],
@@ -43,6 +47,7 @@ export const getCountriesStatisticsReport = async (
       subTitle: options.subTitle ?? 'Top 10 Countries by Customers',
     }),
     content: [
+      // Donut chart and top countries table
       {
         columns: [
           {
@@ -77,6 +82,8 @@ export const getCountriesStatisticsReport = async (
           },
         ],
       },
+
+      // Line chart
       {
         text: 'Customers by Day',
         alignment: 'center',
@@ -88,6 +95,8 @@ export const getCountriesStatisticsReport = async (
         width: 500,
         margin: [0, 0, 0, 20],
       },
+
+      // Bars charts
       {
         text: 'Customers by Month',
         alignment: 'center',
@@ -106,6 +115,12 @@ export const getCountriesStatisticsReport = async (
             width: 250,
           },
         ],
+      },
+
+      // Polar area chart
+      {
+        image: polarAreaChart,
+        width: 500,
       },
     ],
     footer: function (currentPage, pageCount) {

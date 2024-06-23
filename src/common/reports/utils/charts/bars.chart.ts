@@ -3,7 +3,6 @@ import { ChartUtils } from 'src/common/helpers/chart-utils';
 export class BarsChart {
   static async generate(): Promise<string> {
     const config = this.createChartConfig();
-
     return ChartUtils.chartJsToImage(config);
   }
 
