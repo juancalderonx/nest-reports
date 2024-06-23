@@ -1,7 +1,9 @@
 import { Injectable, NotFoundException, OnModuleInit } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 import { PrinterService } from 'src/common/config/printer/printer.service';
+import { TopCountry } from 'src/common/helpers/interfaces';
 import {
+  getCountriesStatisticsReport,
   getOrderByIdReport,
   getSvgChartReport,
 } from 'src/common/reports/store';
@@ -43,5 +45,37 @@ export class StoreReportsService extends PrismaClient implements OnModuleInit {
     const docDefinition = await getSvgChartReport();
 
     return this.printerService.createPdf(docDefinition);
+  }
+
+  async getCountryStatistics(): Promise<any> {
+    const topCountriesData = await this.getTopCountriesData();
+    const mappedCountries = this.mapTopCountriesData(topCountriesData);
+
+    const docDefinition = await getCountriesStatisticsReport({
+      topCountries: mappedCountries,
+    });
+
+    return this.printerService.createPdf(docDefinition);
+  }
+
+  private async getTopCountriesData() {
+    return this.customers.groupBy({
+      by: ['country'],
+      _count: true,
+      orderBy: { _count: { country: 'desc' } },
+      take: 10,
+    });
+  }
+
+  private mapTopCountriesData(
+    // El tipo se puede mejorar con un type custom
+    data: (Prisma.PickEnumerable<
+      Prisma.CustomersGroupByOutputType,
+      'country'[]
+    > & {
+      _count: number;
+    })[],
+  ): TopCountry[] {
+    return data.map(({ country, _count }) => ({ country, customers: _count }));
   }
 }

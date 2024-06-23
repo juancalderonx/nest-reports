@@ -1,6 +1,6 @@
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
 import fs from 'fs';
-import * as ChartUtils from 'src/common/helpers/chart-utils';
+import { ChartUtils } from 'src/common/helpers/chart-utils';
 
 const generateChartImage = async (): Promise<string> => {
   const chartConfig = {

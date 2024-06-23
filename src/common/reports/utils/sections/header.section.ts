@@ -42,7 +42,8 @@ export const buildDate = (): Content => {
     text: DateFormatter.formatDate(new Date()),
     alignment: 'right',
     margin: [20, 30],
-    width: 150,
+    width: 100,
+    fontSize: 10,
   };
 };
 
@@ -82,7 +83,6 @@ export const buildSubTitle = (subTitle: string): Content => {
     margin: [0, 2, 0, 0],
     style: {
       fontSize: 16,
-      bold: true,
     },
   };
 };

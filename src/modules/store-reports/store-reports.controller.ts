@@ -30,4 +30,15 @@ export class StoreReportsController {
     PDF.pipe(res);
     PDF.end();
   }
+
+  @Get('country-statistics')
+  async getCountryStatistics(@Res() res: Response) {
+    const PDF = await this.storeReportsService.getCountryStatistics();
+
+    res.setHeader('Content-Type', 'application/pdf');
+    PDF.info.Title = 'Country Statistics Report';
+    PDF.info.Author = 'Neron';
+    PDF.pipe(res);
+    PDF.end();
+  }
 }

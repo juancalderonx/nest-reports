@@ -4,7 +4,7 @@ import {
   TDocumentDefinitions,
 } from 'pdfmake/interfaces';
 import { CurrencyFormatter, DateFormatter } from 'src/common/helpers';
-import { FooterSection } from '../sections';
+import { FooterSection } from '../utils/sections';
 
 const logo: Content = {
   image: 'src/assets/tucan-banner.png',
