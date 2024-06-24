@@ -16,4 +16,26 @@ export class ExtraReportsController {
     PDF.pipe(res);
     PDF.end();
   }
+
+  @Get('quotation')
+  async getQuotation(@Res() res: Response) {
+    const PDF = await this.extraReportsService.getQuotation();
+
+    res.setHeader('Content-Type', 'application/pdf');
+    PDF.info.Title = 'Quotation';
+    PDF.info.Author = 'Neron';
+    PDF.pipe(res);
+    PDF.end();
+  }
+
+  @Get('custom-size')
+  async customSizeReport(@Res() res: Response) {
+    const PDF = await this.extraReportsService.getCustomSizeReport();
+
+    res.setHeader('Content-Type', 'application/pdf');
+    PDF.info.Title = 'Quotation';
+    PDF.info.Author = 'Neron';
+    PDF.pipe(res);
+    PDF.end();
+  }
 }
